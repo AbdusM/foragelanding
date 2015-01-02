@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+
+<head>
+    <title>Test</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="event.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="title-calendar"> Swag Events</div>
+        <ul id="eventlist">
+        </ul>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    var abdus_collection = {};
+
+    function handleData(data) {
+        //jsonData = data;
+        //console.log(data["results"]);
+        //console.log(data["results"]["collection1"].length);
+        for (var i = 0; i < data["results"]["collection1"].length; i++) {
+           // console.log(i);
+            abdus_collection = data;
+            //.console.log("QUACKQUACKQACUK");
+
+            $item_builder = "<li>";
+
+            //artists loop
+            if (typeof (abdus_collection.results.collection1[i]['Artists']) == 'object'){
+                $item_builder += "<strong>Artist</strong>: " + abdus_collection.results.collection1[i]['Artists']['text'];
+            }
+            else {
+                $item_builder += "<strong>Artist</strong>: " + abdus_collection.results.collection1[i]['Artists'];
+            }
+            //location loop
+            if (typeof (abdus_collection.results.collection1[i]['Artists']) == 'object'){
+                $item_builder += "<br> <strong>Location</strong>: " + abdus_collection.results.collection1[i]['Location'];
+            }
+            else {
+                $item_builder += "<br> <strong>Location</strong>: " + abdus_collection.results.collection1[i]['Location'];
+            }
+
+            //date loop
+            if (typeof (abdus_collection.results.collection1[i]['Date']) == 'object'){
+                $item_builder += "<br><strong>Date</strong>: " + abdus_collection.results.collection1[i]['Date']['text'];
+            }
+            else {
+                $item_builder += "<br> <strong>Date</strong>: " + abdus_collection.results.collection1[i]['Date'];
+            }
+
+            //img
+            $item_builder += "</li><br> ";
+            $('#eventlist').append($item_builder);
+            //$('#eventlist').append("<li>"+data[key]+"</li>");
+            //alert(key + " -> " + data[key]);
+        }
+        console.log(data.results);
+    }
+
+    $.ajax({
+        type: 'get',
+        data: 'json',
+        url: './json-call.php',
+        success: handleData
+    });
+    </script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>
